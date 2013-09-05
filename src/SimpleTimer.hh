@@ -8,11 +8,17 @@
 #ifndef SIMPLETIMER_HH_
 #define SIMPLETIMER_HH_
 
+#include "TimerFunctionsInterface.hh"
+#include <ctime>
+
 class SimpleTimer
 {
 public:
+	SimpleTimer(TimerFunctionsInterface *func) :  timerFunctions(func){}
 	bool createTimer() {return true;}
-	void startTimer() {}
+	time_t startTimer() {return timerFunctions->getCurrentTime();}
+
+	TimerFunctionsInterface *timerFunctions;
 };
 
 
