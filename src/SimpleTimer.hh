@@ -14,11 +14,13 @@
 class SimpleTimer
 {
 public:
-	SimpleTimer(TimerFunctionsInterface *func) :  timerFunctions(func){}
-	bool createTimer() {return true;}
-	time_t startTimer() {return timerFunctions->getCurrentTime();}
+	SimpleTimer(TimerFunctionsInterface *func);
+	bool createTimer();
+	time_t startTimer();
+	int stopTimer();
 
 	TimerFunctionsInterface *timerFunctions;
+	time_t startTime;
 };
 
 

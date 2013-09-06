@@ -10,18 +10,18 @@
 
 #include "SimpleTimer.hh"
 #include "gtest/gtest.h"
+#include "TimerFunctionMock.hh"
+
 
 class SimpleTimerTest : public ::testing::Test
 {
-	protected:
+protected:
 
-	virtual void SetUp()
-	{
-	}
+	virtual void SetUp();
 
-	virtual void TearDown()
-	{
-	}
+	virtual void TearDown();
+	TimerFunctionMock *timerFunctions;
+	SimpleTimer *timer;
 };
 
 #endif /* SIMPLETIMERTEST_HH_ */
