@@ -95,3 +95,83 @@ TEST_F(SimpleTimerTest, test_stop_already_stopped_timer_returns_0)
 	EXPECT_EQ(55, timer->stopTimer());
 	EXPECT_EQ(0, timer->stopTimer());
 }
+
+TEST_F(SimpleTimerTest, test_pause_running_timer_returns_99)
+{
+	time_t startTime = time(0);
+	time_t endTime = time(0);
+
+	EXPECT_CALL(*timerFunctions, getCurrentTime()).
+			WillOnce(Return(startTime)).
+			WillOnce(Return(endTime));
+	EXPECT_CALL(*timerFunctions, calculateSpentTime(endTime, startTime)).
+			WillOnce(Return(99));
+
+
+	EXPECT_EQ(startTime, timer->startTimer());
+	EXPECT_EQ(99, timer->pauseTimer());
+}
+
+TEST_F(SimpleTimerTest, test_pause_running_timer_returns_222)
+{
+	time_t startTime = time(0);
+	time_t endTime = time(0);
+
+	EXPECT_CALL(*timerFunctions, getCurrentTime()).
+			WillOnce(Return(startTime)).
+			WillOnce(Return(endTime));
+	EXPECT_CALL(*timerFunctions, calculateSpentTime(endTime, startTime)).
+			WillOnce(Return(222));
+
+
+	EXPECT_EQ(startTime, timer->startTimer());
+	EXPECT_EQ(222, timer->pauseTimer());
+}
+
+
+TEST_F(SimpleTimerTest, test_start_pause_start_stop_returns_777)
+{
+	time_t startTime = time(0);
+	time_t pauseTime = time(0);
+	time_t restartTime = time(0);
+	time_t endTime = time(0);
+
+	EXPECT_CALL(*timerFunctions, getCurrentTime()).
+			WillOnce(Return(startTime)).
+			WillOnce(Return(pauseTime)).
+			WillOnce(Return(restartTime)).
+			WillOnce(Return(endTime));
+	EXPECT_CALL(*timerFunctions, calculateSpentTime(pauseTime, startTime)).
+			WillOnce(Return(500)).
+			WillOnce(Return(277));
+
+
+	EXPECT_EQ(startTime, timer->startTimer());
+	EXPECT_EQ(500, timer->pauseTimer());
+	EXPECT_EQ(restartTime, timer->startTimer());
+	EXPECT_EQ(777, timer->stopTimer());
+}
+
+TEST_F(SimpleTimerTest, test_start_pause_start_pause_returns_777)
+{
+	time_t startTime = time(0);
+	time_t pauseTime = time(0);
+	time_t restartTime = time(0);
+	time_t endTime = time(0);
+
+	EXPECT_CALL(*timerFunctions, getCurrentTime()).
+			WillOnce(Return(startTime)).
+			WillOnce(Return(pauseTime)).
+			WillOnce(Return(restartTime)).
+			WillOnce(Return(endTime));
+	EXPECT_CALL(*timerFunctions, calculateSpentTime(pauseTime, startTime)).
+			WillOnce(Return(500)).
+			WillOnce(Return(277));
+
+
+	EXPECT_EQ(startTime, timer->startTimer());
+	EXPECT_EQ(500, timer->pauseTimer());
+	EXPECT_EQ(restartTime, timer->startTimer());
+	EXPECT_EQ(777, timer->pauseTimer());
+}
+

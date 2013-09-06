@@ -10,7 +10,8 @@
 
 SimpleTimer::SimpleTimer(TimerFunctionsInterface *func)
 : timerFunctions(func),
-  startTime(0)
+  startTime(0),
+  spentTime(0)
 {}
 
 bool
@@ -30,14 +31,27 @@ SimpleTimer::startTimer()
 }
 
 int
-SimpleTimer::stopTimer()
+SimpleTimer::pauseTimer()
 {
-	int spentTime = 0;
 	if (startTime != 0)
 	{
 		time_t endTime = timerFunctions->getCurrentTime();
-		spentTime = timerFunctions->calculateSpentTime(endTime, startTime);
+		spentTime += timerFunctions->calculateSpentTime(endTime, startTime);
 		startTime = 0;
 	}
 	return spentTime;
+}
+
+int
+SimpleTimer::stopTimer()
+{
+	int totalTime = spentTime;
+	if (startTime != 0)
+	{
+		time_t endTime = timerFunctions->getCurrentTime();
+		totalTime += timerFunctions->calculateSpentTime(endTime, startTime);
+		startTime = 0;
+		spentTime = 0;
+	}
+	return totalTime;
 }

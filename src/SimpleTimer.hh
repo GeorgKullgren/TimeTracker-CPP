@@ -17,10 +17,12 @@ public:
 	SimpleTimer(TimerFunctionsInterface *func);
 	bool createTimer();
 	time_t startTimer();
+	int pauseTimer();
 	int stopTimer();
 
 	TimerFunctionsInterface *timerFunctions;
 	time_t startTime;
+	int spentTime;
 };
 
 
