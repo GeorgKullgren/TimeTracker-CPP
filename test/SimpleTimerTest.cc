@@ -16,11 +16,6 @@ SimpleTimerTest::TearDown()
 {
 }
 
-TEST_F(SimpleTimerTest, test_create_timer)
-{
-	EXPECT_EQ(true, timer->createTimer());
-}
-
 TEST_F(SimpleTimerTest, test_start_timer_returns_current_time)
 {
 	time_t startTime = time(0);

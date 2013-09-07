@@ -14,12 +14,6 @@ SimpleTimer::SimpleTimer(TimerFunctionsInterface *func)
   spentTime(0)
 {}
 
-bool
-SimpleTimer::createTimer()
-{
-	return true;
-}
-
 time_t
 SimpleTimer::startTimer()
 {

@@ -15,7 +15,6 @@ class SimpleTimer
 {
 public:
 	SimpleTimer(TimerFunctionsInterface *func);
-	bool createTimer();
 	time_t startTimer();
 	int pauseTimer();
 	int stopTimer();
