@@ -14,7 +14,7 @@
 class TimerFunctions : public TimerFunctionsInterface
 {
 public:
-	~TimerFunctions();
+	~TimerFunctions() {};
 	virtual time_t getCurrentTime() {return time(0);}
 	virtual int calculateSpentTime(time_t end, time_t beginning) {return difftime(end, beginning);}
 };

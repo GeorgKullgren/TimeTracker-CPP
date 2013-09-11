@@ -15,9 +15,9 @@ class SimpleTimer
 {
 public:
 	SimpleTimer(TimerFunctionsInterface *func);
-	time_t startTimer();
-	int pauseTimer();
-	int stopTimer();
+	virtual time_t startTimer();
+	virtual int pauseTimer();
+	virtual int stopTimer();
 
 	TimerFunctionsInterface *timerFunctions;
 	time_t startTime;
