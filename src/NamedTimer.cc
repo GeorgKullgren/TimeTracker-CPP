@@ -9,18 +9,43 @@
 #include "SimpleTimer.hh"
 #include "TimerFunctions.hh"
 
+
 NamedTimer::NamedTimer()
-: timer(0)
+{
+	timerFunctions = new TimerFunctions;
+}
+
+NamedTimer::NamedTimer(TimerFunctionsInterface *timerFunctionsInstance)
+: timerFunctions(timerFunctionsInstance)
 {
 }
+
 
 NamedTimer::~NamedTimer() {
 }
 
 bool
-NamedTimer::create(char *string)
+NamedTimer::create(const char *namedTimer)
 {
-	TimerFunctionsInterface *timerFunctions = new TimerFunctions;
-	timer = new SimpleTimer(timerFunctions);
+	SimpleTimer *timer;
+	timer = timerMap[namedTimer];
+	if (timer != 0)
+	{
+		return false;
+	}
+
+	timerMap[namedTimer] = new SimpleTimer(timerFunctions);
 	return true;
+}
+
+time_t
+NamedTimer::start(const char *namedTimer)
+{
+	std::map<const char *, SimpleTimer *>::iterator timerIterator;
+	timerIterator = timerMap.find(namedTimer);
+	if (timerIterator != timerMap.end())
+	{
+		return timerIterator->second->startTimer();
+	}
+	return 0;
 }

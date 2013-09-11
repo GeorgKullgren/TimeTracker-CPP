@@ -14,6 +14,8 @@ SimpleTimerTest::SetUp()
 void
 SimpleTimerTest::TearDown()
 {
+	delete timerFunctions;
+	delete timer;
 }
 
 TEST_F(SimpleTimerTest, test_start_timer_returns_current_time)

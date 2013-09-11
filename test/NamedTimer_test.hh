@@ -9,12 +9,15 @@
 #define NAMEDTIMER_TEST_HH_
 
 #include "gmock/gmock.h"
+#include "TimerFunctionMock.hh"
 
 class NamedTimer_test : public ::testing::Test
 {
 protected:
 	virtual void SetUp();
 	virtual void TearDown();
+
+	TimerFunctionMock *timerFunctions;
 };
 
 
