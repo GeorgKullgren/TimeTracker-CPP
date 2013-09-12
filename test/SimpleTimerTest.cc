@@ -42,7 +42,7 @@ TEST_F(SimpleTimerTest, test_start_already_started_timer_returns_previous_start_
 TEST_F(SimpleTimerTest, test_stop_timer_returns_767)
 {
 	time_t startTime = time(0);
-	time_t endTime = time(0);
+	time_t endTime = startTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -58,7 +58,7 @@ TEST_F(SimpleTimerTest, test_stop_timer_returns_767)
 TEST_F(SimpleTimerTest, test_stop_timer_returns_55)
 {
 	time_t startTime = time(0);
-	time_t endTime = time(0);
+	time_t endTime = startTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -79,7 +79,7 @@ TEST_F(SimpleTimerTest, test_stop_not_started_timer_returns_0)
 TEST_F(SimpleTimerTest, test_stop_already_stopped_timer_returns_0)
 {
 	time_t startTime = time(0);
-	time_t endTime = time(0);
+	time_t endTime = startTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -96,7 +96,7 @@ TEST_F(SimpleTimerTest, test_stop_already_stopped_timer_returns_0)
 TEST_F(SimpleTimerTest, test_pause_running_timer_returns_99)
 {
 	time_t startTime = time(0);
-	time_t endTime = time(0);
+	time_t endTime = startTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -112,7 +112,7 @@ TEST_F(SimpleTimerTest, test_pause_running_timer_returns_99)
 TEST_F(SimpleTimerTest, test_pause_running_timer_returns_222)
 {
 	time_t startTime = time(0);
-	time_t endTime = time(0);
+	time_t endTime = startTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -129,9 +129,9 @@ TEST_F(SimpleTimerTest, test_pause_running_timer_returns_222)
 TEST_F(SimpleTimerTest, test_start_pause_start_stop_returns_777)
 {
 	time_t startTime = time(0);
-	time_t pauseTime = time(0);
-	time_t restartTime = time(0);
-	time_t endTime = time(0);
+	time_t pauseTime = startTime + 100;
+	time_t restartTime = pauseTime + 100;
+	time_t endTime = restartTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -139,7 +139,8 @@ TEST_F(SimpleTimerTest, test_start_pause_start_stop_returns_777)
 			WillOnce(Return(restartTime)).
 			WillOnce(Return(endTime));
 	EXPECT_CALL(*timerFunctions, calculateSpentTime(pauseTime, startTime)).
-			WillOnce(Return(500)).
+			WillOnce(Return(500));
+	EXPECT_CALL(*timerFunctions, calculateSpentTime(endTime, restartTime)).
 			WillOnce(Return(277));
 
 
@@ -152,9 +153,9 @@ TEST_F(SimpleTimerTest, test_start_pause_start_stop_returns_777)
 TEST_F(SimpleTimerTest, test_start_pause_start_pause_returns_777)
 {
 	time_t startTime = time(0);
-	time_t pauseTime = time(0);
-	time_t restartTime = time(0);
-	time_t endTime = time(0);
+	time_t pauseTime = startTime + 100;
+	time_t restartTime = pauseTime + 100;
+	time_t endTime = restartTime + 100;
 
 	EXPECT_CALL(*timerFunctions, getCurrentTime()).
 			WillOnce(Return(startTime)).
@@ -162,9 +163,9 @@ TEST_F(SimpleTimerTest, test_start_pause_start_pause_returns_777)
 			WillOnce(Return(restartTime)).
 			WillOnce(Return(endTime));
 	EXPECT_CALL(*timerFunctions, calculateSpentTime(pauseTime, startTime)).
-			WillOnce(Return(500)).
+			WillOnce(Return(500));
+	EXPECT_CALL(*timerFunctions, calculateSpentTime(endTime, restartTime)).
 			WillOnce(Return(277));
-
 
 	EXPECT_EQ(startTime, timer->startTimer());
 	EXPECT_EQ(500, timer->pauseTimer());

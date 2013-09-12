@@ -18,6 +18,7 @@ protected:
 	virtual void TearDown();
 
 	TimerFunctionMock *timerFunctions;
+	NamedTimer *myTimerContainer;
 };
 
 

@@ -49,3 +49,29 @@ NamedTimer::start(const char *namedTimer)
 	}
 	return 0;
 }
+
+int
+NamedTimer::pause(const char *namedTimer)
+{
+	std::map<const char *, SimpleTimer *>::iterator timerIterator;
+	timerIterator = timerMap.find(namedTimer);
+	if (timerIterator != timerMap.end())
+	{
+		return timerIterator->second->pauseTimer();
+	}
+	return 0;
+}
+
+bool
+NamedTimer::remove(const char *namedTimer)
+{
+	std::map<const char *, SimpleTimer *>::iterator timerIterator;
+	timerIterator = timerMap.find(namedTimer);
+	if (timerIterator != timerMap.end())
+	{
+		timerMap.erase(timerIterator);
+		return true;
+	}
+	return false;
+}
+

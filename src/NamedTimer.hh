@@ -19,6 +19,8 @@ public:
 	~NamedTimer();
 	bool create(const char *timerName);
 	time_t start(const char *timerName);
+	int pause(const char *timerName);
+	bool remove(const char *timerName);
 
 	std::map<const char *, SimpleTimer *> timerMap;
 	TimerFunctionsInterface *timerFunctions;
